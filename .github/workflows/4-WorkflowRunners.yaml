@@ -1,6 +1,6 @@
 # @format
 
-name: 4 - workflowRunners
+name: 04 - workflowRunners
 
 on:
   workflow_dispatch:
