@@ -1,0 +1,30 @@
+# @format
+
+name: 03 - schedule training
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  say-hi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: greet
+        run: echo "Hello"
+
+  say-os:
+    runs-on: ubuntu-latest
+    steps:
+      - name: show os
+        run: uname -a
+      - name: show date
+        run: date
+  will-fail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail on purpose
+        run: exit 2
+      - name: done
+        run: echo "done"
