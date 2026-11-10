@@ -1,0 +1,24 @@
+# @format
+
+name: 4 - workflowRunners
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ubuntu_echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo on ubuntu
+        run: echo "$RUNNER_OS"
+  windows_echo:
+    runs-on: windows-latest
+    steps:
+      - name: echo from windows
+        shell: bash
+        run: echo "$RUNNER_OS"
+  macos-runner:
+    runs-on: mac-latest
+    steps:
+        - name: macos run
+          run: echo "$RUNNER_OS"
