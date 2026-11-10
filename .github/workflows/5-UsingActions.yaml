@@ -3,23 +3,26 @@
 name: 5-using-actions
 on:
   workflow_dispatch:
+
 jobs:
   using-actions:
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: 5-UsingActions/react-app
-    runs-on: ubuntu-latest
     steps:
-      - name: checkout-code
-        uses: actions/checkout@v7
-      
-      - name: setup-node
+      - name: Checkout code
+        uses: actions/checkout@v6 # use the latest major you've verified
+
+      - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: "24-x"
-      - name: install-dependancies
-        
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: 5-UsingActions/react-app/package-lock.json
+
+      - name: Install dependencies
         run: npm ci
-      - name: start app
-        
-        run: npm start
+
+      - name: Build app
+        run: npm run build
