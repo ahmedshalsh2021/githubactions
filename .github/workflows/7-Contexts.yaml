@@ -1,7 +1,6 @@
 # @format
 
 name: 07- Contexts
-run-name: using context ${{ runner.os }}
 on:
   workflow_dispatch:
     inputs:
