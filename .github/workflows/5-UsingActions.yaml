@@ -1,3 +1,5 @@
+# @format
+
 name: 5-using-actions
 on:
   workflow_dispatch:
@@ -12,25 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Debug paths
-        working-directory: .
-        run: |
-          echo "--- repo root ---"
-          ls -la
-          echo "--- lockfiles ---"
-          find . -name "package-lock.json" -not -path "*/node_modules/*"
-          echo "--- app folder ---"
-          ls -la 5-UsingActions/react-app || echo "FOLDER NOT FOUND"
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: "26.x"
-          cache: npm
-          cache-dependency-path: "**/package-lock.json"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build app
         run: npm run build
