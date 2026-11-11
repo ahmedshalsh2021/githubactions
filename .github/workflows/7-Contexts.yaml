@@ -1,30 +1,33 @@
-# @format
-
-name: 07- Contexts
+name: 07 - Contexts
 on:
   workflow_dispatch:
     inputs:
       debug:
         type: boolean
         default: true
+
 jobs:
   echo-data:
+    runs-on: ubuntu-latest
     env:
       MY_JOB_VAR: "job"
       MY_OVERWRITTEN_VAR: "job"
-    runs-on: ubuntu-latest
     steps:
-      - name: display_informa
+      - name: Display information
         run: |
-          echo "EventName: ${{github.event_name}}"
-          echo "RefName: ${{github.ref}}"
-          echo "Sha: ${{github.sha}}"
-          echo "Actor ${{github.actor}}"
-          echo "Workflow ${{github.workflow}}"
-          echo "RunnerNumber: ${{github.run_number}}"
-          echo "RunID: ${{github.run_id}}"
-          echo "fristEnv : ${{env.MY_JOB_VAR}}"
-          echo "secondEnv ${{env.MY_OVERWRITTEN_VAR}}"
+          echo "EventName: ${{ github.event_name }}"
+          echo "RefName: ${{ github.ref }}"
+          echo "Sha: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "RunNumber: ${{ github.run_number }}"
+          echo "RunID: ${{ github.run_id }}"
+          echo "firstEnv: ${{ env.MY_JOB_VAR }}"
+          echo "secondEnv: ${{ env.MY_OVERWRITTEN_VAR }}"
           echo "----------- vars from repo --------------"
-          echo "my frist name ${{ vars.MY_FIRST_NAME}}"
-          echo "my second name ${{ vars.MY_SECOND_NAME}}"
+          echo "my first name: ${{ vars.MY_FIRST_NAME }}"
+          echo "my second name: ${{ vars.MY_SECOND_NAME }}"
+
+      - name: Using condition
+        if: ${{ inputs.debug }}
+        run: echo "I'm true condition"
