@@ -10,7 +10,7 @@ on:
       - main
 jobs:
   echo:
-    runs-on: ubuntu-la  test
+    runs-on: ubuntu-latest
     steps:
-      - name: echo-m  essage
+      - name: echo-message
         run: echo "Running when PR is opened or synchrized"
