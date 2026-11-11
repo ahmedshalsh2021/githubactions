@@ -1,6 +1,6 @@
 # @format
 
-name: 5-using-actions
+name: 05-using-actions
 on:
   workflow_dispatch:
 

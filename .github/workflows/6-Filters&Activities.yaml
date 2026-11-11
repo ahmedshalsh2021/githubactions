@@ -1,0 +1,16 @@
+# @format
+
+name: 06 - 1 - filters and activites types
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+jobs:
+  echo:
+    runs-on: ubuntu-la  test
+    steps:
+      - name: echo-m  essage
+        run: echo "Running when PR is opened or synchrized"
