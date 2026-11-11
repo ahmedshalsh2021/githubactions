@@ -1,0 +1,21 @@
+# @format
+
+name: 06 - 1 - filters and activites types
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+  push:
+    branches:
+      - pr-test
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo-message
+        run: echo "Running when PR is closed"
