@@ -1,0 +1,30 @@
+name: 09 - Using Functions
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  echo1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: failStep
+        run: exit 1
+      - name: i will skipped
+        if: success() # if the previous step is success
+        run: echo "i will skipped"
+      - name: i will excuate
+        if: failure()
+        run: echo "i will print if pervious step is failure"
+      - name: i will excuate if cancel
+        if: ${{!cancelled()}}
+        run: echo "i will print if pervious step is not cancelled"
+      - name: sleep for 20s
+        run: sleep 20
+      - name: print PR labels
+        run: |
+          cat << EOF
+            ${{toJson(github.event.pull_request.labels)}}
+          EOF
+      - name: bug step
+        if: ${{failure() && !cancelled() && contains(github.event.pull_request.title, 'fix') }}
+        run: echo "bug step"
