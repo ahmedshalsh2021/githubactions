@@ -1,0 +1,22 @@
+name: 08 - Using Variable
+
+on:
+  workflow_dispatch:
+
+env:
+  WORKFLOW_VAR: i'm workflow variable
+  OVERWRITTEN: i will be overwritten
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    env:
+      JOB_VAR: i'm job env var
+      OVERWRITTEN: i will be overwritten at the job level
+    steps:
+      - name: print env of this step
+        run: echo ${{ env.WORKFLOW_VAR }} ${{ env.JOB_VAR }} ${{ env.OVERWRITTEN }}
+      - name: print env of this job
+        run: echo ${{ env.WORKFLOW_VAR }} ${{ env.JOB_VAR }} ${{ env.OVERWRITTEN }}
+      - name: print env of this workflow
+        run: echo ${{ env.WORKFLOW_VAR }} ${{ env.JOB_VAR }} ${{ env.OVERWRITTEN }}
