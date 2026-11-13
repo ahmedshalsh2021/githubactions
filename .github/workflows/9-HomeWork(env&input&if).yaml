@@ -1,0 +1,45 @@
+name: HOMEWORK
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        type: choice
+        options:
+          - stagging
+          - production
+        default: stagging
+      verbose:
+        type: boolean
+        default: false
+
+env:
+  APP_NAME: my-app
+  LOG_LEVEL: ${{vars.LOG_LEVEL ||  'info'}}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target }}
+    env:
+      APP_NAME: my-app-job
+    steps:
+      - name: printinfo
+        run: |
+          echo "APP_NAME: $APP_NAME"
+          echo "LOG_LEVEL: $LOG_LEVEL"
+          echo "VERBOSE: ${{ inputs.verbose }}"
+          echo "TARGET: ${{ github.environment }}"
+          echo "GITHUB_EVENT_NAME: ${{ github.event_name }}"
+      - name: debug extra info
+        if: inputs.verbose && github.ref == 'refs/heads/main'
+        run: |
+          echo "commit-sha: ${{ github.sha }}"
+          echo "LOG_LEVEL: ${{ env.LOG_LEVEL ||  'info'}}"
+          echo "TRIGGERED BY : ${{ github.event_name }}"
+          echo "Target: ${{ inputs.target }}"
+      - name: print last info
+        run: |
+          echo "OVERWRITTEN_APP_NAME: $APP_NAME"
+          echo "LOG_LEVEL: $LOG_LEVEL"
+          echo "VERBOSE: ${{ inputs.verbose }}"
+          echo "TARGET: ${{ github.environment }}"
