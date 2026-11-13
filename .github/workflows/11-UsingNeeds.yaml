@@ -1,0 +1,87 @@
+name: 10 - Using Needs
+
+on:
+  workflow_dispatch:
+    inputs:
+      pass-unit-test:
+        type: boolean
+        description: "Pass the unit test?"
+        default: false
+jobs:
+  lint-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: running unit test
+        run: echo "----- Running Unit Test -----"
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: running unit test
+        run: echo "----- Running Unit Test -----"
+    needs:
+      - lint-build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: running build
+        run: echo "----- Running Build -----"
+    needs:
+      - lint-build
+      - unit-test
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - lint-build
+    steps:
+      - name: failing test
+        if: ${{!inputs.pass-unit-test}}
+        run: exit 1
+  e2e-test:
+    runs-on: ubuntu-latest
+    needs:
+      - deploy
+    steps:
+      - name: running e2e test
+        run: echo "----- Running E2E Test -----"
+  load-test:
+    runs-on: ubuntu-latest
+    needs:
+      - e2e-test
+    steps:
+      - name: running load test
+        run: echo "----- Running Load Test -----"
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    needs:
+      - load-test
+    steps:
+      - name: running deploy to production
+        run: echo "----- Running Deploy to Production -----"
+  unit-test-2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: running unit test
+        run: echo "----- Running Unit Test -----"
+    needs:
+      - lint-build
+      - deploy-to-production
+  build-2:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: running build
+        run: echo "----- Running Build -----"
+      - name: failing test
+        if: ${{!inputs.pass-unit-test}}
+        run: exit 1
+    needs:
+      - unit-test-2
+      - deploy-to-production
+  deploy-2:
+    runs-on: ubuntu-latest
+    needs:
+      - build-2
+    steps:
+      - name: running deploy
+        run: echo "----- Running Deploy -----"
