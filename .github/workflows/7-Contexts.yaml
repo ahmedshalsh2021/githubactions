@@ -30,4 +30,4 @@ jobs:
 
       - name: Using condition
         if: ${{ inputs.debug }}
-        run: echo "I'm true condition"
+        run: echo "I'm true condition BTW"
